@@ -17,12 +17,23 @@ if (latitude || longitude || city) {
 android {
     namespace 'com.gathin.tvweather'
     compileSdk 34
+    signingConfigs {
+        distribution {
+            if(System.getenv('CLEAN_TV_KEYSTORE')) {
+                storeFile file(System.getenv('CLEAN_TV_KEYSTORE'))
+                storePassword System.getenv('CLEAN_TV_STORE_PASSWORD')
+                keyAlias 'clean-tv-release'
+                keyPassword System.getenv('CLEAN_TV_STORE_PASSWORD')
+            }
+        }
+    }
+
     defaultConfig {
         applicationId 'com.gathin.tvweather'
         minSdk 26
         targetSdk 34
-        versionCode 2
-        versionName '1.1'
+        versionCode 3
+        versionName '1.0.0'
         buildConfigField 'String', 'WEATHER_CITY', groovy.json.JsonOutput.toJson(city)
         buildConfigField 'String', 'WEATHER_LATITUDE', groovy.json.JsonOutput.toJson(latitude)
         buildConfigField 'String', 'WEATHER_LONGITUDE', groovy.json.JsonOutput.toJson(longitude)
@@ -31,7 +42,7 @@ android {
     sourceSets {
         main { manifest.srcFile 'app/AndroidManifest.xml'; java.srcDirs = ['app/src']; res.srcDirs = ['app/res'] }
     }
-    buildTypes { release { signingConfig signingConfigs.debug } }
+    buildTypes { release { signingConfig System.getenv('CLEAN_TV_KEYSTORE') ? signingConfigs.distribution : signingConfigs.debug } }
     compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }
 }
 dependencies { testImplementation 'junit:junit:4.13.2' }

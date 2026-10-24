@@ -12,22 +12,29 @@ These are **upstream CleanYourTV reference screenshots**, credited to [Gathin23/
 
 Screenshot source and license: [image credits](docs/images/README.md). No screenshots from a private TV setup are published here.
 
-## Get it running with Codex
+## Download and install — no AI or computer build required
 
-1. **Download:** choose **Code > Download ZIP** and extract, or `git clone https://github.com/akshay1420/clean-tv-personal.git`.
-2. **Open locally:** open the extracted/cloned folder in Codex on a computer on the same network as your TV. Enable the TV's debugging connection and keep the remote nearby for authorization.
-3. **Paste the setup prompt:** use [PROMPT.md](PROMPT.md), fill in your own TV details locally, and let Codex back up, build, install, personalize and verify the setup.
+**[Download Clean TV APK](https://github.com/akshay1420/clean-tv-personal/releases/download/v1.0.0/Clean-TV-1.0.0.apk)** · **[Optional weather/AQI APK](https://github.com/akshay1420/clean-tv-personal/releases/download/v1.0.0/Local-Weather-AQI-1.0.0.apk)** · **[All release files](https://github.com/akshay1420/clean-tv-personal/releases/tag/v1.0.0)**
 
-**Java source is built on the computer; the resulting APK is transferred to and installed on the TV.** The GitHub ZIP alone is not a TV app. The [complete Codex and manual setup guide](docs/USING_CODEX.md) includes connection modes, backups, Windows/macOS/Linux commands, APK paths, Home selection, photo import, remote buttons, weather/AQI, restart checks and recovery.
+1. Download the **APK**, transfer it to your Android TV / Google TV by USB drive or a file-transfer app, and open it using the TV's file manager.
+2. Allow installation for that file-manager source if prompted, then choose **Install > Open**. The launcher appears as **Clean TV**. No Codex, source download, ADB or compilation is needed for this path.
+3. Open **Launcher settings** to choose backgrounds, screensaver, widgets and remote buttons. Choose **Load included offline wallpapers** once to unpack the licensed collection on the TV. Select Clean TV as default Home where your TV supports it.
+4. For weather/AQI, also install **Local Weather**, open it, and choose **Use TV location** and grant approximate-location permission, or **Choose a city** if your TV cannot provide a location.
 
-To recreate the photo look, use the included [licensed offline wallpaper pack](assets/wallpapers/), import it as described in the guide, then select Famous Places or Night City Lights. Choose your own installed apps, remote mappings and optional weather area. Apps, accounts, ad blockers and another person's preferences are not copied. Firmware compatibility varies; the exact behavior cannot be guaranteed on every Google TV.
+Read the [TV installation guide](docs/INSTALL.md) for transfer methods, permissions, Home selection, recovery and troubleshooting. Android installs APK files; it does **not** execute a gzip/tar.gz file. GitHub's automatic **Source code** ZIP/tar.gz downloads are for developers, not TV installation. An optional ZIP bundle on the release page contains both APKs; extract it before installation.
+
+This first direct-install release is a preview. Builds, unit tests and lint are checked; the new city/location and bundled-photo controls still need real-device coverage across different TV brands. No personal TV data is included.
+
+### Optional: source and Codex workflow
+
+Developers can clone/download the source and build it. [The Codex/manual development guide](docs/USING_CODEX.md) and [PROMPT.md](PROMPT.md) remain available for custom builds and assisted ADB setup. They are **not required** to install the downloadable APKs.
 
 ## Features
 
 - Home layout and app ordering, accessible through **Launcher settings** in the top bar.
 - **Remote Buttons**: learn detectable keys, or optionally redirect openings of Netflix, YouTube, Prime Video and Google Play to an app chosen on that device. No button mappings are enabled by default. Some vendor firmware intercepts branded keys; redirecting an original app also affects its manual launches. Essential navigation, power, input and volume controls are protected.
 - **Backgrounds and screensaver**: changing dark abstract backgrounds; optional nature, landmark and night-city photo collections with captions; moving clock or photo screensavers. Home photo sizing supports full-screen crop or whole-photo fit. Default is dark abstract. No personal photos are bundled.
-- **Widgets**: clock/date visibility, optional cached weather and modeled US AQI through a separate small companion. Home has no network permission. Weather requests use a locally configured approximate area, with no GPS, tracking or background polling service.
+- **Widgets**: clock/date visibility, optional cached weather and modeled US AQI through a separate small companion. Home has no network permission. Users can grant optional approximate TV location or search for a city; there is no background location tracking.
 - No sponsored recommendation feed in the launcher. This does not remove advertising from streaming apps.
 
 ## Compatibility
@@ -43,21 +50,21 @@ cd launcher
 ./gradlew --no-daemon testReleaseUnitTest lintRelease assembleRelease
 ```
 
-On Windows use `gradlew.bat`. Gradle downloads its pinned distribution and Android dependencies on the first build. APKs are generated under `app/build/outputs/apk/release/` and `weather/build/outputs/apk/release/`; they are ignored by Git. Both modules use the same local Android debug signing key for development. The companion provider enforces a signature permission, so the two apps must be signed with the same key. No signing keys are included. For distribution, configure your own signing securely outside source control.
+On Windows use `gradlew.bat`. Gradle downloads its pinned distribution and Android dependencies on the first build. APKs are generated under `app/build/outputs/apk/release/` and `weather/build/outputs/apk/release/`; they are ignored by Git. Both modules use the same local Android debug signing key for development. Published release APKs instead share a separate private distribution key, supplied through `CLEAN_TV_KEYSTORE` and `CLEAN_TV_STORE_PASSWORD` environment variables when built by the maintainer. The companion provider enforces a signature permission, so the two apps must be signed with the same key. No signing keys are included. For distribution, configure your own signing securely outside source control.
 
 The existing Android app ID is retained for source compatibility. Installing over an already installed build requires a matching signing certificate; do not uninstall an existing launcher without first preserving access to the original Home and its settings.
 
 ## Optional weather and AQI
 
-Copy `launcher/weather.properties.example` to **`launcher/weather.properties`**, set your chosen area name and numeric latitude/longitude, then build the `weather` module. The example coordinates are placeholders, not a saved location. The real configuration is ignored by Git. Without it the companion shows Weather not configured and makes no weather requests. The selected area is compiled into your local companion APK, so do not distribute that APK if you want to keep the area private.
+Install the weather/AQI APK from the same release as the launcher. Open **Local Weather** and choose **Use TV location (optional)**. The app asks for approximate-location permission only when you choose that action. If the TV provides a network location, that area is saved on the TV and used for both forecasts and AQI. Permission alone cannot provide a fix on TVs without a working location provider: **Choose a city** is the fallback and needs no location permission.
 
-Install both locally built APKs, open **Launcher settings > Widgets**, and enable/view weather. Refreshes are requested about every 30 minutes while Home is visible; the companion caches weather and AQI independently and labels stale readings. This source version uses build-time area configuration; it does not yet have an on-TV city search.
+City search and the chosen area are sent to Open-Meteo to obtain results. No location is preset in the public APKs; there is no GPS polling, background location service, account or personal data from another TV. Weather and AQI cache independently, refresh about every 30 minutes while Home is visible, and retain old observations on a network failure. Change the saved area in Local Weather anytime. Developers can optionally use the ignored `launcher/weather.properties` for their own build-time defaults, but this is not needed for direct installation.
 
-Sources: [Open-Meteo weather](https://open-meteo.com/en/docs), [Open-Meteo air quality](https://open-meteo.com/en/docs/air-quality-api), CAMS ENSEMBLE. AQI is explicitly **modeled US AQI**, not a local monitoring-station reading or another country's AQI scale. Provider attribution is displayed in the companion.
+Sources: [Open-Meteo weather](https://open-meteo.com/en/docs), [air quality](https://open-meteo.com/en/docs/air-quality-api), [city search](https://open-meteo.com/en/docs/geocoding-api), CAMS ENSEMBLE and GeoNames. AQI is explicitly **modeled US AQI**, not a local monitoring-station reading or another country's AQI scale. Attribution is displayed in the companion.
 
 ## Optional offline photos
 
-The repository includes 13 licensed public reference photographs in [assets/wallpapers/](assets/wallpapers/): 3 nature, 7 famous places and 3 night-city views. They are optional files outside the APK, not private photos or a TV data export. Follow the [import instructions](docs/USING_CODEX.md#import-the-included-offline-wallpaper-pack), then choose a collection under Backgrounds and screensaver. Start with dark abstract/plain if you do not import photos.
+The repository includes 13 licensed public reference photographs in [assets/wallpapers/](assets/wallpapers/): 3 nature, 7 famous places and 3 night-city views. They are licensed public assets, not private photos or a TV data export. They are bundled in the direct-install launcher APK. Open **Backgrounds and screensaver > Load included offline wallpapers**, then choose a collection. Loading runs off the UI thread and preserves existing files. The download is larger because it includes photos; normal playback still decodes one wallpaper at a time. Default dark abstract needs no photo loading. Advanced ADB [import instructions](docs/USING_CODEX.md#import-the-included-offline-wallpaper-pack) remain available.
 
 Keep the authors, source links and per-image licenses in [PHOTO-CREDITS.txt](assets/wallpapers/PHOTO-CREDITS.txt) and [manifest.json](assets/wallpapers/manifest.json). Caption format is one `filename<TAB>caption` per line. Imported collections use `nature-`, `world-` or `nightlife-` prefixes in the theme's `wallpapers` folder. The protected `ThemeProvider` contract is in the source; upstream [theme documentation](https://github.com/Gathin23/cleanyourtv/blob/main/themes/README.md) provides further background.
 

@@ -6,5 +6,5 @@
     <string name="widget_weather_loading">Updating local weather…</string>
     <string name="widget_weather_unavailable">Weather unavailable · open Widgets</string>
     <string name="widget_cached">cached</string>
-    <string name="widget_help">Weather uses the area configured in the companion build, without GPS. Updates about every 30 minutes while Home is visible. Old readings are labelled cached. Extra module cards depend on compatible installed apps.</string>
+    <string name="widget_help">Open Local Weather to choose a city or allow an approximate TV location when supported. Updates about every 30 minutes while Home is visible. Old readings are labelled cached. Extra module cards depend on compatible installed apps.</string>
 </resources>

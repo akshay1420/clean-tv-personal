@@ -1,4 +1,6 @@
-# Install and personalize with Codex
+# Optional: develop or install with Codex
+
+For ordinary installation, use the [direct APK guide](INSTALL.md). No AI tool is required. The instructions below are an advanced alternative for source builds and assisted setup.
 
 This guide sets up this repository's launcher, remote customization, wallpapers, screensaver and optional weather/AQI on **your own** Android TV or Google TV.
 
@@ -55,7 +57,7 @@ adb -s TV_IP:PORT shell cmd package resolve-activity --brief -a android.intent.a
 
 Have Codex save package/settings state and any existing launcher APKs to an ignored `.local/` folder before continuing. Do not use `adb backup` as a claim of complete recovery; modern Android restricts private app-data backups.
 
-For optional weather, copy `launcher/weather.properties.example` to `launcher/weather.properties` and set your chosen approximate city/area and coordinates. Keep this file local. With no configuration, the companion makes no weather requests. The area is compiled into the companion, so rebuild it when changing the area.
+After installation, open Local Weather to allow approximate TV location or search for a city. No source rebuild is needed to change the saved area. For developer builds only, `weather.properties` can optionally supply build-time defaults; keep that file local. A fresh public APK has no selected location and makes no forecast requests until an area is chosen.
 
 Build both modules from the repository root:
 
@@ -101,7 +103,7 @@ The branded app-opening fallback applies to every opening of the selected origin
 
 ## Import the included offline wallpaper pack
 
-The optional [photo pack](../assets/wallpapers/) has 3 nature photos, 7 famous places and 3 night-city views. It contains licensed public reference photographs, not pictures or configuration pulled from a TV. Read [PHOTO-CREDITS.txt](../assets/wallpapers/PHOTO-CREDITS.txt) and preserve attribution. The files remain outside the APK. Import them after installing Clean and before final remote-helper setup.
+The optional [photo pack](../assets/wallpapers/) has 3 nature photos, 7 famous places and 3 night-city views. It contains licensed public reference photographs, not pictures or configuration pulled from a TV. Read [PHOTO-CREDITS.txt](../assets/wallpapers/PHOTO-CREDITS.txt) and preserve attribution. The release APK includes this pack. Load it directly using Backgrounds and screensaver > Load included offline wallpapers. The ADB commands below are an optional advanced alternative; use them before final remote-helper setup.
 
 Run the following from the repository root, with your actual target, on Android versions supporting `content write`:
 

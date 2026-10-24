@@ -5,14 +5,26 @@ plugins {
 android {
     namespace 'com.gathin.tvhome'
     compileSdk 34
+    signingConfigs {
+        distribution {
+            if(System.getenv('CLEAN_TV_KEYSTORE')) {
+                storeFile file(System.getenv('CLEAN_TV_KEYSTORE'))
+                storePassword System.getenv('CLEAN_TV_STORE_PASSWORD')
+                keyAlias 'clean-tv-release'
+                keyPassword System.getenv('CLEAN_TV_STORE_PASSWORD')
+            }
+        }
+    }
+
+    sourceSets.main.assets.srcDirs += [rootProject.file('../assets')]
 
     defaultConfig {
         // Opt-in identity for firmware with a package-name HOME allowlist; see docs/devices/xiaomi-mitv-aetp0-dofus.md.
         applicationId providers.gradleProperty('launcherApplicationId').getOrElse('com.gathin.tvhome')
         minSdk 26
         targetSdk 34
-        versionCode 8
-        versionName '2.7'
+        versionCode 9
+        versionName '1.0.0'
     }
 
     buildTypes {
@@ -21,8 +33,8 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            // Sideloaded over ADB, never published: sign with the debug key so it installs over a debug build.
-            signingConfig signingConfigs.debug
+            // Distribution builds use an external private key; local development falls back to the Android debug key.
+            signingConfig System.getenv('CLEAN_TV_KEYSTORE') ? signingConfigs.distribution : signingConfigs.debug
         }
     }
 

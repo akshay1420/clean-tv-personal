@@ -15,6 +15,7 @@ import java.io.InputStreamReader;
 
 public final class AppearanceSettingsActivity extends Activity {
     private LinearLayout rows;
+    private boolean installingPhotos;
     private final String[] homes = {"abstract", "nature", "world", "nightlife", "none", "theme"};
     private final String[] savers = {"clock", "clock_nature", "nature", "world", "nightlife"};
     private int dp(int value) { return Math.round(value * getResources().getDisplayMetrics().density); }
@@ -60,6 +61,7 @@ public final class AppearanceSettingsActivity extends Activity {
         title.setText(R.string.personal_appearance);
         title.setTextColor(Color.WHITE); title.setTextSize(28);
         rows.addView(title);
+        row(installingPhotos ? "Loading included wallpapers…" : "Load included offline wallpapers", this::installPhotos);
         row(getString(R.string.personal_home_state, homeLabels()[index(homes, PersonalAppearance.home(this))]), () ->
                 new AlertDialog.Builder(this).setTitle(R.string.personal_home)
                         .setSingleChoiceItems(homeLabels(), index(homes, PersonalAppearance.home(this)), (d, i) -> {
@@ -104,6 +106,36 @@ public final class AppearanceSettingsActivity extends Activity {
         rows.addView(info);
         rows.getChildAt(1).requestFocus();
     }
+    private void installPhotos() {
+        if (installingPhotos) return;
+        installingPhotos=true; render();
+        android.content.Context app=getApplicationContext();
+        new Thread(() -> {
+            String message;
+            try {
+                java.io.File dir=Config.dir(app);
+                if(dir==null) throw new java.io.IOException("Photo storage unavailable");
+                int count=0;
+                String[] names=app.getAssets().list("wallpapers");
+                if(names==null) throw new java.io.IOException("Photo pack unavailable");
+                for(String name:names) {
+                    if(!name.endsWith(".jpg") && !"captions.txt".equals(name)) continue;
+                    try(java.io.InputStream input=app.getAssets().open("wallpapers/"+name)) {
+                        if(WallpaperPack.copyMissing(input,new java.io.File(new java.io.File(dir,"wallpapers"),name))) count++;
+                    }
+                }
+                message=count>0 ? "Offline wallpapers ready. Choose a photo collection below." : "Photo pack is already present. Existing files kept.";
+            } catch(java.io.IOException failure) { message="Could not load photos. Check available storage and try again."; }
+            String result=message;
+            runOnUiThread(() -> {
+                installingPhotos=false;
+                if(isFinishing() || isDestroyed()) return;
+                changed(); render();
+                android.widget.Toast.makeText(this,result,android.widget.Toast.LENGTH_LONG).show();
+            });
+        },"photo-pack-import").start();
+    }
+
     private void credits() {
         StringBuilder text = new StringBuilder();
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(getAssets().open("photo-credits.txt"), java.nio.charset.StandardCharsets.UTF_8))) {
