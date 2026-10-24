@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="personal_appearance">Backgrounds and screensaver</string>
+    <string name="personal_home">Home background</string>
+    <string name="personal_home_state">Home background: %1$s</string>
+    <string name="personal_sizing">Home photo sizing</string>
+    <string name="personal_sizing_state">Home photo sizing: %1$s</string>
+    <string-array name="personal_sizing_labels">
+        <item>Fill screen (crop edges, no borders)</item>
+        <item>Show whole photo (may have borders)</item>
+    </string-array>
+    <string name="personal_fresh_state">New wallpaper each time Home opens: %1$s</string>
+    <string name="personal_saver">Screensaver style</string>
+    <string name="personal_saver_state">Screensaver: %1$s</string>
+    <string name="personal_idle">Start after inactivity on Home</string>
+    <string name="personal_idle_state">Start after inactivity on Home: %1$s</string>
+    <string name="personal_preview">Preview screensaver</string>
+    <string name="personal_system_saver">Android screensaver settings</string>
+    <string name="personal_credits">Photo credits and sources</string>
+    <string name="personal_collection_info">Offline collection: %1$d nature photos, %2$d famous places and %3$d night-city views. Photo slides change every 30 seconds. The Home timer runs only while Home is visible; it does not interrupt playback.</string>
+    <string-array name="personal_home_labels">
+        <item>Changing dark abstract</item><item>Nature photos</item><item>Famous places with location details</item><item>Night City Lights with location details</item><item>Plain background</item><item>Existing theme or selected picture</item>
+    </string-array>
+    <string-array name="personal_saver_labels">
+        <item>Moving clock on dark background</item><item>Moving clock over nature photo</item><item>Nature photo slideshow</item><item>Famous places slideshow with location details</item><item>Night City Lights slideshow</item>
+    </string-array>
+</resources>

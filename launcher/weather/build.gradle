@@ -1,0 +1,37 @@
+plugins { id 'com.android.application' }
+
+def location = new Properties()
+def locationFile = rootProject.file('weather.properties')
+if (locationFile.exists()) locationFile.withInputStream { location.load(it) }
+def city = location.getProperty('city', '')
+def latitude = location.getProperty('latitude', '')
+def longitude = location.getProperty('longitude', '')
+if (latitude || longitude || city) {
+    if (!city.trim() || !latitude || !longitude) throw new GradleException('Set city, latitude and longitude together in local weather.properties')
+    try {
+        def lat = Double.parseDouble(latitude)
+        def lon = Double.parseDouble(longitude)
+        if (!Double.isFinite(lat) || !Double.isFinite(lon) || lat < -90 || lat > 90 || lon < -180 || lon > 180) throw new Exception('Invalid coordinates')
+    } catch (Exception e) { throw new GradleException('Weather latitude/longitude must be valid numeric coordinates', e) }
+}
+android {
+    namespace 'com.gathin.tvweather'
+    compileSdk 34
+    defaultConfig {
+        applicationId 'com.gathin.tvweather'
+        minSdk 26
+        targetSdk 34
+        versionCode 2
+        versionName '1.1'
+        buildConfigField 'String', 'WEATHER_CITY', groovy.json.JsonOutput.toJson(city)
+        buildConfigField 'String', 'WEATHER_LATITUDE', groovy.json.JsonOutput.toJson(latitude)
+        buildConfigField 'String', 'WEATHER_LONGITUDE', groovy.json.JsonOutput.toJson(longitude)
+    }
+    buildFeatures { buildConfig true }
+    sourceSets {
+        main { manifest.srcFile 'app/AndroidManifest.xml'; java.srcDirs = ['app/src']; res.srcDirs = ['app/res'] }
+    }
+    buildTypes { release { signingConfig signingConfigs.debug } }
+    compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }
+}
+dependencies { testImplementation 'junit:junit:4.13.2' }

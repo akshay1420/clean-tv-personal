@@ -1,0 +1,10 @@
+<resources>
+    <string name="widgets">Widgets</string>
+    <string name="widget_weather_state">Current weather: %1$s</string>
+    <string name="widget_clock_state">Clock and date: %1$s</string>
+    <string name="widget_weather_details">Weather and air quality details</string>
+    <string name="widget_weather_loading">Updating local weather…</string>
+    <string name="widget_weather_unavailable">Weather unavailable · open Widgets</string>
+    <string name="widget_cached">cached</string>
+    <string name="widget_help">Weather uses the area configured in the companion build, without GPS. Updates about every 30 minutes while Home is visible. Old readings are labelled cached. Extra module cards depend on compatible installed apps.</string>
+</resources>

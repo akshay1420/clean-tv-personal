@@ -1,0 +1,5 @@
+# Optional weather configuration: copy this file to weather.properties locally.
+# Use a city/area you choose. This file contains no real saved TV location.
+city=Example area
+latitude=0.0
+longitude=0.0

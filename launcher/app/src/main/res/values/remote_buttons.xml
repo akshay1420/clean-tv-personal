@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="remote_buttons">Remote Buttons</string>
+    <string name="remote_original">Original app</string>
+    <string name="remote_redirect_help">Some TV firmware intercepts branded buttons before Android can learn them. The four app redirects below open your chosen app whenever the original app opens, including manual launches. Add a button learns other detectable buttons.</string>
+    <string name="remote_redirect_confirm">This replaces all openings of this original app, including its remote button and manual launches. Restore original button action turns the redirect off.</string>
+    <string name="remote_enabled">Button helper is enabled</string>
+    <string name="remote_disabled">Enable the button helper to remap buttons from any app</string>
+    <string name="remote_enable">Button helper settings</string>
+    <string name="remote_add">Add a button</string>
+    <string name="remote_empty">No custom buttons yet</string>
+    <string name="remote_help">Choose Add a button, press its real remote button, then choose an app. Home, Back, volume, power and navigation keep their normal actions. Some firmware-controlled buttons may not be remappable.</string>
+    <string name="remote_choose_button">Which button are you setting up?</string>
+    <string name="remote_other">Other button</string>
+    <string name="remote_press_button">Press the %1$s button now. Press Back to cancel.</string>
+    <string name="remote_timeout">No app button detected. Try again, or use another button.</string>
+    <string name="remote_select_app">%1$s — choose an app</string>
+    <string name="remote_change">Change app</string>
+    <string name="remote_restore">Restore original button action</string>
+    <string name="remote_saved">Button saved</string>
+    <string name="remote_save_failed">Could not save the button. Try again.</string>
+    <string name="remote_missing">(not installed)</string>
+</resources>
