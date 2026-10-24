@@ -2,6 +2,26 @@
 
 A lightweight home launcher for Android TV and Google TV, based on [CleanYourTV](https://github.com/Gathin23/cleanyourtv). This repository contains reusable source code, not a backup or configuration dump from a TV.
 
+## Launcher preview
+
+These are **upstream CleanYourTV reference screenshots**, credited to [Gathin23/cleanyourtv](https://github.com/Gathin23/cleanyourtv/tree/eb0131a32fd8567086f39002f1782f7c1b078ca6). They show the shared base launcher and clock, not a test of this fork or a private TV configuration. This fork adds the settings/features listed below; its default is dark abstract and your apps/layout can differ.
+
+| Home and app dock | Clock screensaver |
+| --- | --- |
+| ![Upstream reference: launcher Home with app dock](docs/images/upstream-home.png) | ![Upstream reference: moving-clock screensaver](docs/images/upstream-screensaver.png) |
+
+Screenshot source and license: [image credits](docs/images/README.md). No screenshots from a private TV setup are published here.
+
+## Get it running with Codex
+
+1. **Download:** choose **Code > Download ZIP** and extract, or `git clone https://github.com/akshay1420/clean-tv-personal.git`.
+2. **Open locally:** open the extracted/cloned folder in Codex on a computer on the same network as your TV. Enable the TV's debugging connection and keep the remote nearby for authorization.
+3. **Paste the setup prompt:** use [PROMPT.md](PROMPT.md), fill in your own TV details locally, and let Codex back up, build, install, personalize and verify the setup.
+
+**Java source is built on the computer; the resulting APK is transferred to and installed on the TV.** The GitHub ZIP alone is not a TV app. The [complete Codex and manual setup guide](docs/USING_CODEX.md) includes connection modes, backups, Windows/macOS/Linux commands, APK paths, Home selection, photo import, remote buttons, weather/AQI, restart checks and recovery.
+
+To recreate the photo look, use the included [licensed offline wallpaper pack](assets/wallpapers/), import it as described in the guide, then select Famous Places or Night City Lights. Choose your own installed apps, remote mappings and optional weather area. Apps, accounts, ad blockers and another person's preferences are not copied. Firmware compatibility varies; the exact behavior cannot be guaranteed on every Google TV.
+
 ## Features
 
 - Home layout and app ordering, accessible through **Launcher settings** in the top bar.
@@ -37,11 +57,13 @@ Sources: [Open-Meteo weather](https://open-meteo.com/en/docs), [Open-Meteo air q
 
 ## Optional offline photos
 
-Photo files are not embedded in the launcher APK. To use a collection, import your licensed photos using the upstream [theme file interface](https://github.com/Gathin23/cleanyourtv/blob/main/themes/README.md) / `ThemeProvider` contract in the source. Collections use `nature-`, `world-` or `nightlife-` filename prefixes in the theme's `wallpapers` folder. `captions.txt` uses one `filename<TAB>caption` entry per line. The existing in-app photo credits preserve attribution for the optional reference collection; the actual photo files are not included in this repository. Choose the desired collection under Backgrounds and screensaver. Without imported files, use abstract/plain or an existing theme.
+The repository includes 13 licensed public reference photographs in [assets/wallpapers/](assets/wallpapers/): 3 nature, 7 famous places and 3 night-city views. They are optional files outside the APK, not private photos or a TV data export. Follow the [import instructions](docs/USING_CODEX.md#import-the-included-offline-wallpaper-pack), then choose a collection under Backgrounds and screensaver. Start with dark abstract/plain if you do not import photos.
+
+Keep the authors, source links and per-image licenses in [PHOTO-CREDITS.txt](assets/wallpapers/PHOTO-CREDITS.txt) and [manifest.json](assets/wallpapers/manifest.json). Caption format is one `filename<TAB>caption` per line. Imported collections use `nature-`, `world-` or `nightlife-` prefixes in the theme's `wallpapers` folder. The protected `ThemeProvider` contract is in the source; upstream [theme documentation](https://github.com/Gathin23/cleanyourtv/blob/main/themes/README.md) provides further background.
 
 ## Privacy and defaults
 
-No TV address, device identifier, serial, Wi-Fi configuration, logs, screenshots, app inventory, account data, saved mappings, weather location, ADB keys, private signing keys or local SDK paths are included. Preferences and mappings start fresh on each installation. Application names used in generic redirect choices describe supported integrations, not the contents of any device.
+No private TV address, device identifier, serial, Wi-Fi configuration, logs, screenshots, app inventory, account data, saved mappings, weather location, ADB keys, private signing keys or local SDK paths are included. The preview images are credited public upstream references, and the wallpaper pack contains licensed public photographs. Preferences and mappings start fresh on each installation. Application names used in generic redirect choices describe supported integrations, not the contents of any device.
 
 ## Development checks
 
@@ -49,4 +71,4 @@ Run the Gradle unit tests and lint before changing behavior. Validate launcher, 
 
 ## Attribution and license
 
-MIT, with the original license retained in [LICENSE](LICENSE). Launcher upstream: Gathin23/cleanyourtv, source baseline `eb0131a32fd8567086f39002f1782f7c1b078ca6`. Custom remote, appearance and weather integration is maintained in this repository. Font licensing: [FONT-LICENSE-OFL.txt](launcher/FONT-LICENSE-OFL.txt). Reference photo licensing: `launcher/app/src/main/assets/photo-credits.txt`.
+Source code is MIT, with the original license retained in [LICENSE](LICENSE). Photos retain their individual licenses; see the wallpaper credits. Screenshot credits are in [docs/images/README.md](docs/images/README.md). Launcher upstream: Gathin23/cleanyourtv, source baseline `eb0131a32fd8567086f39002f1782f7c1b078ca6`. Custom remote, appearance and weather integration is maintained in this repository. Font licensing: [FONT-LICENSE-OFL.txt](launcher/FONT-LICENSE-OFL.txt). Reference photo licensing: `launcher/app/src/main/assets/photo-credits.txt`.

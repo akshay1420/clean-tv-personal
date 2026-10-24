@@ -1,0 +1,13 @@
+world-india-gate.jpg	India Gate — New Delhi, India
+world-taj-mahal.jpg	Taj Mahal — Agra, India
+world-great-wall.jpg	Great Wall at Badaling — Beijing, China
+world-eiffel.jpg	Eiffel Tower — Paris, France
+world-sydney.jpg	Sydney Opera House — Sydney, Australia
+world-pyramids.jpg	Pyramids of Giza — Giza, Egypt
+world-grand-canyon.jpg	Grand Canyon, Hopi Point — Arizona, USA
+nature-lake.jpg	Mountain lake
+nature-greece.jpg	Mountains and lake — Greece
+nature-forest.jpg	Misty forest — Dilijan, Armenia
+nightlife-tokyo.jpg	Roppongi at night — Tokyo, Japan
+nightlife-hong-kong.jpg	Victoria Harbour at night — Hong Kong, China
+nightlife-new-york.jpg	New York City at night — New York, USA

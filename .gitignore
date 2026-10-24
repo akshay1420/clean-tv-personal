@@ -22,3 +22,6 @@ traces/
 .DS_Store
 hs_err_pid*.log
 replay_pid*.log
+
+# Private per-device setup records
+.local/
